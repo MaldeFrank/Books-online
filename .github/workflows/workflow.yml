@@ -12,16 +12,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: Build
-        id: build
-        uses: cloudposse/github-action-docker-build-push@main
-        with:
-          registry: registry.hub.docker.com
-          organization: "malde321"
-          repository: "books-online"
-          login: "${{ secrets.DOCKERHUB_USERNAME }}"
-          password: "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}"
-          platforms: linux/amd64,linux/arm64
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t malde321/books-online:latest .
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          docker push malde321/books-online:latest
 
       - name: Push
         run: docker push malde321/books-online:1.0.0
