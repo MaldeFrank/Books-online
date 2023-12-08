@@ -3,8 +3,10 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy the entire application code to the container
-COPY . .
+COPY package*.json ./
 
 # Install project dependencies
 RUN npm install
+
+# Copy the entire application code to the container
+COPY . .
