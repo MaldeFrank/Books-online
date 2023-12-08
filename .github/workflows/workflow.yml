@@ -1,13 +1,27 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [main]
+
 jobs:
-  check-bats-version:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Build
+        id: build
+        uses: cloudposse/github-action-docker-build-push@main
         with:
-          node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
+          registry: registry.hub.docker.com
+          organization: "malde321"
+          repository: "books-online"
+          login: "${{ secrets.DOCKERHUB_USERNAME }}"
+          password: "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}"
+          platforms: linux/amd64,linux/arm64
+
+      - name: Push
+        run: docker push malde321/books-online:1.0.0
