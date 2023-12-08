@@ -16,7 +16,4 @@ jobs:
         run: |
           docker build -t malde321/books-online:latest .
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
-          docker push malde321/books-online:latest
-
-      - name: Push
-        run: docker push malde321/books-online:1.0.0
+          docker push malde321/books-online:1.0.0
