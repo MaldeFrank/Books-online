@@ -15,7 +15,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker build -t malde321/books-online:latest .
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
           docker push malde321/books-online:latest
 
       - name: Push
